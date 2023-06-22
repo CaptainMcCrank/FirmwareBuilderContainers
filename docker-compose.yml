@@ -1,0 +1,22 @@
+version: "3.1" 
+
+services:
+  apt-cacher-ng:
+    build: ./apt_cacher_ng
+    ports:
+      - "3142:3142"
+    volumes:
+      - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
+  ansible:
+    build: ./ansible
+    tty: true
+    stdin_open: true
+
+    network_mode: host
+
+    environment:
+      DOCKER_HOST: "true"
+
+    volumes:
+      - /home/patrickmccanna/Development/DockerVolume/:/home/pi/Playbooks
+      - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
