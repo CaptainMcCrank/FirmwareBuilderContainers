@@ -1,23 +1,41 @@
-FROM        ubuntu
-
-# Expose the cache directory for volume binding
-VOLUME ["/var/cache/apt-cacher-ng"]
+FROM ubuntu:latest
 
 # Update apt-get cache
 RUN apt-get update -y && \
         # Install apt-cacher-ng package
-        apt-get install apt-cacher-ng -y && \
+        apt-get install -y apt-cacher-ng openssh-client && \
         # Clean up
         rm -rf /var/lib/apt/lists/*
+
+RUN echo exit 0 > /usr/sbin/policy-rc.d
+
+# generate a new SSH key
+RUN ssh-keygen -t rsa -b 4096 -f /root/.ssh/id_rsa -q -N ""
+# copy the public key to the authorized_keys file
+RUN cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
+
+# set the correct permissions on the authorized_keys file
+RUN chmod 600 /root/.ssh/authorized_keys
+
+RUN chmod 0777 /var/cache/apt-cacher-ng
+
+RUN ls -alh /var/cache/apt-cacher-ng/
 
 # Expose the apt-cacher-ng port to be binded
 EXPOSE 3142
 
 # Set cache directory permissions
-CMD chmod 777 /var/cache/apt-cacher-ng && \
+
         # Append PassThroughPattern config for SSL/TLS proxying (optional)
-        echo "PassThroughPattern: .*" >> /etc/apt-cacher-ng/acng.conf && \
+#        echo "PassThroughPattern: .*" >> /etc/apt-cacher-ng/acng.conf && \
         # Start the service
-        /etc/init.d/apt-cacher-ng start && \
+#        /etc/init.d/apt-cacher-ng start && \
         # Output all logs of apt-cacher-ng
-        tail -f /var/log/apt-cacher-ng/*
+#        tail -f /var/log/apt-cacher-ng/*
+
+
+# Append PassThroughPattern config for SSL/TLS proxying (optional)
+RUN echo "PassThroughPattern: .*" >> /etc/apt-cacher-ng/acng.conf
+
+# Start the service
+CMD /etc/init.d/apt-cacher-ng start
