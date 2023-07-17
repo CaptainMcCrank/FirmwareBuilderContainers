@@ -1,14 +1,6 @@
 version: "3.1" 
 
 services:
-  #apt-cacher-ng:
-    #container_name: apt_cacher
-    #build: ./apt_cacher_ng
-    #ports:
-    #  - "3142:3142"
-    #volumes:
-    #  - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
-    #  - ./cache:/var/cache/apt-cacher-ng
 
   apt-cacher-ng:
     image: sameersbn/apt-cacher-ng
@@ -28,11 +20,11 @@ services:
     network_mode: host
 
     environment:
-      DOCKER_HOST: "CaptainMcCrank.local"
+      DOCKER_HOST: "CaptainMcCrank.local" # Change to your hostname
 
     volumes:
-      - /home/patrickmccanna/Development/DockerVolume/:/home/pi/Playbooks
-      - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
+      - /Users/Patrick/Development/Playbooks/DockerVolume:/home/pi/Playbooks # Change to your host OS's path for the Playbooks directory that you want to use.
+      - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket # this is used for enabling mdns on linux systems.  Assumes Avahi is installed on host OS.  You shouldn't need to modify this on mac or windows based hosts.
 
 volumes:
   apt-cacher-ng:
