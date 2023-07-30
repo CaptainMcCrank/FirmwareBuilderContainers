@@ -23,7 +23,7 @@ services:
       DOCKER_HOST: "CaptainMcCrank.local" # Change to your hostname
 
     volumes:
-      - /Users/Patrick/Development/Playbooks/DockerVolume:/home/pi/Playbooks # Change to your host OS's path for the Playbooks directory that you want to use.
+      - /Users/Patrick/Development/Playbooks/MyDockerVolumes:/home/pi/Playbooks # Change to your host OS's path for the Playbooks directory that you want to use.
       - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket # this is used for enabling mdns on linux systems.  Assumes Avahi is installed on host OS.  You shouldn't need to modify this on mac or windows based hosts.
 
 volumes:
