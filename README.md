@@ -1,13 +1,13 @@
 # FirmwareBuilderContainers
-These are Containers for building SBC linux firmware images.  
+These are Containers for building SBC linux firmware images using ansible automation.  
 
-This repo enables you to operate your own firmware build environment for using ansible automation to build firmware for single board computers.  This implementation uses a second container running apt-cacher-ng.  You can accelerate your builds with playbooks that change your target device to use the local caching server as a repository.  
+![Building Firmware With](Documentation/BuildingProjectsViaAnsible.gif)
 
-If the cache doesn't have the file, it grabs it from the official rasbian servers.  If you have to rerun the playbook later, you won't have to wait for the download from the rasbian servers- the cache will have a copy.  
+The [docker-compose file](docker-compose.yml) will build a docker & apt-cacher-ng container.  
 
-[![Apt-cacher-ng](https://vumbnail.com/873530184_medium.jpg)]([https://player.vimeo.com/video/873530184](https://vimeo.com/874182481/e540ad415c?share=copy)?badge=0&amp;autopause=0&amp;quality_selector=1&amp;progress_bar=1&amp;player_id=0&amp;app_id=58479" "apt-cacher-ng")
+You can use these to accelerate your builds with playbooks that change your target device to use the local caching server as a repository.  If the cache doesn't have the file, it grabs it from the official rasbian servers.  If you have to rerun the playbook later, you won't have to wait for the download from the rasbian servers- the cache will have a copy.  
 
-
+![Apt-cacher-ng](Documentation/apt_cacher_ng.gif)
 
 
 # Installation Instructions
@@ -53,17 +53,18 @@ You can attach to the ansible container by typing
 `docker exec -it ansible bash` 
 
 
-## Ansible Container
+# About the Ansible Container
 One container is running ansible.  
 * Attach to the container with the command docker exec -it ansible bash
 * Create playbook project directories in the /home/pi/Playbooks directory
 * The /etc/ansible/hosts file is tuned to push firmware to any device on the local network named "ansibledest.local".
 * Validate you can reach the target system with a sample ping: `ping@ansibledest.local`
-* Copy an ssh key to the target system with the command `ssh-copy-id pi@ansibledest.local`
+* Copy an ssh key to the target system with the command `ssh-copy-id pi@ansibledest.local` (*Note Line 14 of the [Dockerfile](ansible/Dockerfile) for your Ansible container- the key is created when you build the container.  I don't have a copy of your key :D*)
 * When you're ready to deploy your project to the target type `ansible-playbook run.yml`
 
 
-## Apt-Cacher-NG container
+
+# About the Apt-Cacher-NG container
 the second container runs apt-cacher-ng 
 * It's exposed as a web server vended from the host on port.  Attach to it in a browser at either http://localhost:3142 or http://[yourhostoshostname]:3142
 * You can see efficiency statistics by browsing to the web server referenced above.
