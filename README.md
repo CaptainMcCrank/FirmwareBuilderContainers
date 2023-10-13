@@ -1,6 +1,5 @@
 # FirmwareBuilderContainers
 These are Containers for building SBC linux firmware images using ansible automation.  
-
 - [FirmwareBuilderContainers](#firmwarebuildercontainers)
 - [Project Summary](#project-summary)
 - [Installation Instructions](#installation-instructions)
@@ -17,6 +16,7 @@ These are Containers for building SBC linux firmware images using ansible automa
   - [Accessing the running pi](#accessing-the-running-pi)
 - [About the Ansible Container](#about-the-ansible-container)
 - [About the Apt-Cacher-NG container](#about-the-apt-cacher-ng-container)
+- [Video Guide for Setting up firmware builder container project](#video-guide-for-setting-up-firmware-builder-container-project)
 
 # Project Summary
 
@@ -27,6 +27,9 @@ The [docker-compose file](docker-compose.yml) will build a docker & apt-cacher-n
 You can use these to accelerate your builds with playbooks that change your target device to use the local caching server as a repository.  If the cache doesn't have the file, it grabs it from the official rasbian servers.  If you have to rerun the playbook later, you won't have to wait for the download from the rasbian servers- the cache will have a copy.  
 
 ![Apt-cacher-ng](Documentation/apt_cacher_ng.gif)
+
+If you're not much of a reader, go to the very bottom of this page for a video that walks you through each of the steps.
+
 
 
 # Installation Instructions
@@ -171,10 +174,10 @@ the second container runs apt-cacher-ng
 
 [This page is a placeholder till I have time to publish a real readme](https://patrickmccanna.net/container-based-builds-of-raspberry-pi-using-ansible/)
 
+
+
+
+# Video Guide for Setting up firmware builder container project
 I've created a video that walks through how to setup this project:
 
 [![Tutorial](Documentation/ThumbOverview.jpg)](https://player.vimeo.com/video/873530184?badge=0&amp;autopause=0&amp;quality_selector=1&amp;progress_bar=1&amp;player_id=0&amp;app_id=58479" "Tutorial")
-
-
-
-
