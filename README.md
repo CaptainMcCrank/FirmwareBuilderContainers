@@ -62,7 +62,7 @@ Find the hostname of the workstation hosting the containers.  This value needs t
 
 From within the FirmwareBuilderContainers directory, type:
 
-`docker-compose up -d`
+`docker compose up -d`
 
 Your containers are now running!  
 
